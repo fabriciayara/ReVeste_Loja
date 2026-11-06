@@ -56,7 +56,8 @@ input[type="range"],input[type="radio"],input[type="checkbox"]{accent-color:var(
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
 .card{border:1px solid var(--line);border-radius:10px;overflow:hidden;cursor:pointer;background:var(--panel);}
 .card:hover{border-color:var(--line-strong);}
-.card-img{aspect-ratio:1;background:var(--surface);display:flex;align-items:center;justify-content:center;font-size:28px;color:var(--faint);position:relative;}
+.card-img{aspect-ratio:1;background:var(--surface);display:block;position:relative;overflow:hidden;}
+.card-img img{width:100%;height:100%;object-fit:cover;display:block;}
 .fav-dot{position:absolute;top:8px;right:8px;width:26px;height:26px;border-radius:999px;background:var(--bg);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:13px;}
 .fav-dot.active{color:var(--secondary);}
 .card-body{padding:10px 12px 14px;}
@@ -68,9 +69,11 @@ input[type="range"],input[type="radio"],input[type="checkbox"]{accent-color:var(
 
 /* product */
 .product-layout{display:grid;grid-template-columns:1fr 1fr;gap:36px;}
-.gallery-main{aspect-ratio:1;background:var(--surface);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:44px;color:var(--faint);}
+.gallery-main{aspect-ratio:1;background:var(--surface);border-radius:12px;overflow:hidden;}
+.gallery-main img{width:100%;height:100%;object-fit:cover;display:block;}
 .gallery-thumbs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px;}
-.gallery-thumbs div{aspect-ratio:1;background:var(--surface);border-radius:6px;display:flex;align-items:center;justify-content:center;color:var(--faint);font-size:18px;}
+.gallery-thumbs div{aspect-ratio:1;background:var(--surface);border-radius:6px;overflow:hidden;}
+.gallery-thumbs div img{width:100%;height:100%;object-fit:cover;display:block;}
 .chip{display:inline-flex;border:none;background:var(--surface);border-radius:999px;padding:5px 11px;font-size:11.5px;font-weight:600;color:var(--text);}
 .measures{display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12.5px;color:var(--muted);background:var(--surface);border-radius:8px;padding:12px 14px;}
 .trust-link{font-size:12.5px;font-weight:600;color:var(--primary);text-decoration:underline;cursor:pointer;}
@@ -79,7 +82,8 @@ input[type="range"],input[type="radio"],input[type="checkbox"]{accent-color:var(
 /* cart/checkout */
 .cart-layout{display:grid;grid-template-columns:1.4fr 1fr;gap:28px;align-items:start;}
 .cart-item{display:flex;gap:12px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line);}
-.cart-item .ph{width:60px;height:60px;border-radius:8px;background:var(--surface);display:flex;align-items:center;justify-content:center;color:var(--faint);flex:none;}
+.cart-item .ph{width:60px;height:60px;border-radius:8px;background:var(--surface);overflow:hidden;flex:none;}
+.cart-item .ph img{width:100%;height:100%;object-fit:cover;display:block;}
 .summary{border:1px solid var(--line);border-radius:12px;padding:18px;position:sticky;top:76px;}
 .summary .ln{display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px;color:var(--muted);}
 .summary .ln.total{color:var(--text);font-weight:700;font-size:15px;border-top:1px solid var(--line);padding-top:10px;margin-top:4px;}
@@ -289,14 +293,14 @@ input[type="range"],input[type="radio"],input[type="checkbox"]{accent-color:var(
 
 <script>
 const PRODUCTS = [
-  {id:'p1', name:'Jaqueta jeans oversized', cat:'Jaquetas', size:'M', cond:'Bom', price:79.90, seller:'Camila R.', icon:'🧥', measures:{Busto:'108cm',Comprimento:'62cm',Ombro:'46cm'}},
-  {id:'p2', name:'Vestido midi floral', cat:'Vestidos', size:'P', cond:'Novo', price:59.90, seller:'Renata A.', icon:'👗', measures:{Busto:'90cm',Comprimento:'105cm'}},
-  {id:'p3', name:'Calça alfaiataria', cat:'Calças', size:'G', cond:'Bom', price:69.90, seller:'Juliana F.', icon:'👖', measures:{Cintura:'82cm',Comprimento:'100cm'}},
-  {id:'p4', name:'Blusa de tricot', cat:'Blusas', size:'M', cond:'Usado', price:39.90, seller:'Beatriz M.', icon:'👚', measures:{Busto:'96cm',Comprimento:'58cm'}},
-  {id:'p5', name:'Bota coturno', cat:'Calçados', size:'38', cond:'Bom', price:89.90, seller:'Camila R.', icon:'👢', measures:{Numeração:'38'}},
-  {id:'p6', name:'Bolsa transversal', cat:'Bolsas', size:'Único', cond:'Novo', price:49.90, seller:'Renata A.', icon:'👜', measures:{Largura:'22cm',Altura:'16cm'}},
-  {id:'p7', name:'Camisa social listrada', cat:'Blusas', size:'M', cond:'Bom', price:44.90, seller:'Juliana F.', icon:'👔', measures:{Busto:'102cm',Comprimento:'70cm'}},
-  {id:'p8', name:'Saia plissada', cat:'Vestidos', size:'P', cond:'Novo', price:54.90, seller:'Beatriz M.', icon:'🩱', measures:{Cintura:'70cm',Comprimento:'60cm'}},
+  {id:'p1', name:'Jaqueta jeans oversized', cat:'Jaquetas', size:'M', cond:'Bom', price:79.90, seller:'Camila R.', img:'assets/products/p1.jpg', measures:{Busto:'108cm',Comprimento:'62cm',Ombro:'46cm'}},
+  {id:'p2', name:'Vestido midi floral', cat:'Vestidos', size:'P', cond:'Novo', price:59.90, seller:'Renata A.', img:'assets/products/p2.jpg', measures:{Busto:'90cm',Comprimento:'105cm'}},
+  {id:'p3', name:'Calça alfaiataria', cat:'Calças', size:'G', cond:'Bom', price:69.90, seller:'Juliana F.', img:'assets/products/p3.jpg', measures:{Cintura:'82cm',Comprimento:'100cm'}},
+  {id:'p4', name:'Blusa de tricot', cat:'Blusas', size:'M', cond:'Usado', price:39.90, seller:'Beatriz M.', img:'assets/products/p4.jpg', measures:{Busto:'96cm',Comprimento:'58cm'}},
+  {id:'p5', name:'Bota coturno', cat:'Calçados', size:'38', cond:'Bom', price:89.90, seller:'Camila R.', img:'assets/products/p5.jpg', measures:{Numeração:'38'}},
+  {id:'p6', name:'Bolsa transversal', cat:'Bolsas', size:'Único', cond:'Novo', price:49.90, seller:'Renata A.', img:'assets/products/p6.jpg', measures:{Largura:'22cm',Altura:'16cm'}},
+  {id:'p7', name:'Camisa social listrada', cat:'Blusas', size:'M', cond:'Bom', price:44.90, seller:'Juliana F.', img:'assets/products/p7.jpg', measures:{Busto:'102cm',Comprimento:'70cm'}},
+  {id:'p8', name:'Saia plissada', cat:'Vestidos', size:'P', cond:'Novo', price:54.90, seller:'Beatriz M.', img:'assets/products/p8.jpg', measures:{Cintura:'70cm',Comprimento:'60cm'}},
 ];
 
 let cart = [];
@@ -380,7 +384,7 @@ function productCard(p){
   const div = document.createElement('div');
   div.className = 'card';
   div.innerHTML = `
-    <div class="card-img" onclick="nav('produto','${p.id}')">${p.icon}
+    <div class="card-img" onclick="nav('produto','${p.id}')"><img src="${p.img}" alt="${p.name}">
       <div class="fav-dot ${isFav?'active':''}" onclick="event.stopPropagation(); toggleFav('${p.id}')">${isFav?'♥':'♡'}</div>
     </div>
     <div class="card-body" onclick="nav('produto','${p.id}')">
@@ -460,8 +464,8 @@ function renderProduct(id){
   const measuresHtml = Object.entries(p.measures).map(([k,v])=>`<div><b>${k}:</b> ${v}</div>`).join('');
   document.getElementById('productDetail').innerHTML = `
     <div>
-      <div class="gallery-main">${p.icon}</div>
-      <div class="gallery-thumbs"><div>${p.icon}</div><div>${p.icon}</div><div>${p.icon}</div></div>
+      <div class="gallery-main"><img src="${p.img}" alt="${p.name}"></div>
+      <div class="gallery-thumbs"><div><img src="${p.img}" alt="${p.name}"></div><div><img src="${p.img}" alt="${p.name}"></div><div><img src="${p.img}" alt="${p.name}"></div></div>
     </div>
     <div>
       <h2 style="margin:0 0 4px">${p.name}</h2>
@@ -520,7 +524,7 @@ function renderCart(){
   const f = frete(subtotal);
   const itemsHtml = items.map((p,i) => `
     <div class="cart-item">
-      <div class="ph">${p.icon}</div>
+      <div class="ph"><img src="${p.img}" alt="${p.name}"></div>
       <div style="flex:1"><b>${p.name}</b><div class="note">Tamanho ${p.size}</div></div>
       <div><b>${money(p.price)}</b></div>
       <span class="note" style="cursor:pointer;text-decoration:underline" onclick="removeFromCart(${i})">remover</span>
