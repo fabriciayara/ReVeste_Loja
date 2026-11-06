@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ReVeste — Case Study</title>
+<meta name="description" content="Case study de UX/UI do ReVeste, e-commerce de moda circular.">
+<link rel="icon" href="assets/reveste-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F7F4EF; --panel:#ffffff; --surface:#DCE8DD; --line:#E4DFD2;
+    --text:#242321; --muted:#5B564C; --faint:#716B5C;
+    --primary:#24543F; --secondary:#A94F36; --danger:#B42318;
+    color-scheme:light;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;background:var(--bg);color:var(--text);
+    font-family:'DM Sans',system-ui,-apple-system,sans-serif;line-height:1.6;
+    padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  h1,h2,h3{font-family:'Manrope',system-ui,sans-serif;font-weight:800;text-wrap:balance;margin:0}
+  a{color:var(--primary)}
+  .wrap{max-width:860px;margin:0 auto;padding:0 max(20px,env(safe-area-inset-left,0px)) 0 max(20px,env(safe-area-inset-right,0px))}
+
+  /* hero */
+  .hero{background:var(--primary);color:#fff;padding:56px 0 48px}
+  .hero .wrap{display:flex;gap:28px;align-items:center;flex-wrap:wrap}
+  .hero img{width:96px;height:96px;flex:none;border-radius:16px}
+  .hero .tag{font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:#CFE0D5;font-weight:700;margin-bottom:8px}
+  .hero h1{font-size:clamp(28px,5vw,40px);color:#fff}
+  .hero p{color:#E7EFE8;max-width:52ch;margin-top:10px;font-size:15px}
+  .meta-row{display:flex;gap:22px;flex-wrap:wrap;margin-top:22px;font-size:12.5px;color:#CFE0D5}
+  .meta-row b{color:#fff;display:block;font-size:13px;margin-bottom:2px}
+
+  section{padding:48px 0}
+  section + section{border-top:1px solid var(--line)}
+  .label{font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:var(--secondary);font-weight:700;margin-bottom:10px}
+  h2{font-size:26px;margin-bottom:14px}
+  p.lead{font-size:16px;color:var(--text);max-width:62ch}
+  p{color:var(--muted);max-width:62ch}
+
+  .real-tag, .fic-tag{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;padding:4px 11px;border-radius:999px;margin-bottom:14px}
+  .real-tag{background:var(--surface);color:var(--primary)}
+  .fic-tag{background:#F3E3DC;color:var(--secondary)}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px 20px}
+  .card h3{font-size:15px;margin-bottom:6px}
+  .card p{font-size:13.5px;margin:0}
+
+  .findings{margin-top:16px;display:flex;flex-direction:column;gap:10px}
+  .findings li{font-size:14.5px;color:var(--text)}
+
+  .persona-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:18px}
+  .persona{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px}
+  .persona .nm{font-family:'Manrope',sans-serif;font-weight:700;font-size:16px}
+  .persona .role{font-size:12px;color:var(--secondary);font-weight:600;margin:2px 0 10px}
+  .persona p{font-size:13.5px;margin:0}
+
+  .journey{display:flex;gap:10px;overflow-x:auto;padding:4px 0 10px;margin-top:18px}
+  .jstep{flex:none;width:160px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px}
+  .jstep.crit{border-color:var(--secondary);background:#FBF0EC}
+  .jstep .n{font-size:11px;font-weight:700;color:var(--faint)}
+  .jstep h4{font-family:'Manrope',sans-serif;font-size:13.5px;margin:4px 0 6px}
+  .jstep p{font-size:12px;margin:0}
+
+  .ia-list{display:grid;grid-template-columns:1fr 1fr;gap:10px 24px;margin-top:18px}
+  .ia-list li{font-size:14px;color:var(--text)}
+  .ia-list b{color:var(--primary)}
+
+  .thumbs{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:18px}
+  .thumb{display:block;border:1px solid var(--line);border-radius:12px;padding:18px;background:var(--panel);text-decoration:none}
+  .thumb .k{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);font-weight:700}
+  .thumb h3{font-size:15px;margin:6px 0 4px;color:var(--text)}
+  .thumb span{font-size:12.5px;color:var(--primary);font-weight:600}
+
+  .swatches{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+  .sw{width:76px}
+  .sw .c{height:56px;border-radius:8px}
+  .sw span{display:block;font-size:10.5px;color:var(--muted);margin-top:5px;font-family:monospace}
+  .type-sample{display:flex;gap:24px;flex-wrap:wrap;margin-top:18px}
+  .type-sample div{flex:1;min-width:220px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px}
+  .type-sample .tag2{font-size:11px;color:var(--faint);text-transform:uppercase;letter-spacing:.08em}
+
+  .bugbox{background:#FBF0EC;border:1px solid #E9C9BB;border-radius:12px;padding:16px 18px;margin-top:14px}
+  .bugbox b{color:var(--secondary);display:block;margin-bottom:4px;font-family:'Manrope',sans-serif}
+  .bugbox p{color:var(--text);font-size:13.5px;margin:0}
+
+  .okbox{background:var(--surface);border-radius:12px;padding:16px 18px;margin-top:14px}
+  .okbox b{color:var(--primary);display:block;margin-bottom:4px;font-family:'Manrope',sans-serif}
+  .okbox p{color:var(--text);font-size:13.5px;margin:0}
+
+  .cta{text-align:center}
+  .cta .btn{display:inline-block;margin-top:10px;background:var(--primary);color:#fff;padding:12px 24px;border-radius:999px;font-weight:700;font-size:14px;text-decoration:none}
+
+  footer{padding:36px 0 60px;text-align:center;color:var(--faint);font-size:12.5px}
+
+  @media (max-width:640px){
+    .grid2,.persona-grid,.ia-list,.thumbs,.type-sample{grid-template-columns:1fr}
+    .hero .wrap{flex-direction:column;align-items:flex-start}
+  }
+</style>
+
+</head>
+<body>
+
+<div class="hero">
+  <div class="wrap">
+    <img src="assets/reveste-logo.png" alt="Logo do ReVeste">
+    <div>
+      <a href="index.html" style="color:#CFE0D5;font-size:12.5px;text-decoration:none">&larr; Voltar pro site</a>
+      <div class="tag" style="margin-top:14px">Case study · UX/UI Design</div>
+      <h1>ReVeste</h1>
+      <p>E-commerce de moda circular — comprar e vender roupas de segunda mão com confiança, medida real e política de troca visível desde o início.</p>
+      <div class="meta-row">
+        <div><b>Papel</b>Pesquisa, UX e UI, com mentoria de IA</div>
+        <div><b>Entregáveis</b>Pesquisa, personas, wireframes, protótipo, UI</div>
+        <div><b>Status</b>Projeto de portfólio, em aprendizado</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="label">Apresentação</div>
+    <h2>Um brechó online em que dá pra confiar na peça antes de comprar</h2>
+    <p class="lead">O ReVeste é um projeto de portfólio dentro de uma linha de especialização em e-commerce pra pequenos negócios — cada projeto explora um desafio de UX diferente. Aqui o desafio é a confiança: como fazer alguém comprar uma peça de roupa usada sem poder tocar nela.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="label">Problema</div>
+    <h2>Catálogo incompleto e decisão às cegas</h2>
+    <p class="lead">Marketplaces de moda circular costumam ter catálogo mal organizado e informação insuficiente — principalmente tamanho, estado de conservação e medidas reais da peça. Sem isso, decidir comprar uma peça de segunda mão vira um ato de fé.</p>
+    <div class="grid2">
+      <div class="card"><h3>Falta de confiança</h3><p>Sem medida real, fotos de vários ângulos e política de troca visível, a pessoa não sabe no que está confiando até a peça chegar.</p></div>
+      <div class="card"><h3>Filtro que não filtra</h3><p>Dado de tamanho/condição existe mas nem sempre vira filtro de verdade — ou o vendedor simplesmente não preenche.</p></div>
+      <div class="card"><h3>Frete escondido</h3><p>Custo de envio só aparece no fim do checkout, depois que a pessoa já decidiu comprar.</p></div>
+      <div class="card"><h3>Sem canal pra vender</h3><p>Quem quer se desfazer de roupas boas não tem um caminho simples — ou depende 100% de curadoria da plataforma.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="label">Objetivos</div>
+    <h2>O que o ReVeste precisa resolver</h2>
+    <ul class="findings">
+      <li><b>Confiança antes do checkout:</b> medidas reais, fotos de vários ângulos e política de troca visível direto na página do produto.</li>
+      <li><b>Filtro confiável:</b> tamanho, estado e preço restringindo o catálogo de verdade.</li>
+      <li><b>Frete transparente:</b> custo de envio visível no carrinho, não só no fim do checkout.</li>
+      <li><b>Vender sem fricção:</b> um fluxo simples de "Vender minhas roupas" pra quem quer se desfazer de peças boas.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="real-tag">● Pesquisa real</span>
+    <div class="label">Pesquisa exploratória</div>
+    <h2>O que encontramos em marketplaces de moda circular reais</h2>
+    <p class="lead">Pesquisa feita em duas frentes: análise estrutural de um marketplace público (catálogo, filtros, parâmetros de URL) e cadastro real + navegação em outro, com prints e anotações detalhadas de cada etapa do fluxo de compra e venda.</p>
+    <ul class="findings">
+      <li>Tamanho e cor às vezes só aparecem no título do anúncio — não existem como filtro de verdade.</li>
+      <li>Quando existe uma sidebar de filtro completa (categoria, tamanho, estado, material, marca, preço), o dado nem sempre é confiável: campos como "material" costumam aparecer como "não disponível" porque o vendedor não preenche.</li>
+      <li>Nenhuma das plataformas analisadas tem avaliação de produto ou de vendedor.</li>
+      <li>Frete só é calculado no checkout, não antes — a pessoa só descobre o custo real depois de decidir comprar.</li>
+      <li>Troca costuma virar crédito dentro da própria plataforma, não reembolso em dinheiro — e tem custo de frete.</li>
+      <li>Selo de "sustentabilidade" existe mas raramente explica o cálculo por trás — fica raso.</li>
+      <li>O fluxo de venda mais comum é consignação: a pessoa manda a peça, a plataforma avalia, fotografa e precifica — diferente do modelo P2P (o vendedor cadastra a própria peça) que o ReVeste adotou.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="fic-tag">◆ Personas fictícias</span>
+    <div class="label">Personas</div>
+    <h2>Pra quem o ReVeste está sendo desenhado</h2>
+    <p class="lead">Personas fictícias, construídas a partir dos achados da pesquisa real acima — não são pessoas entrevistadas, são hipóteses de perfil de uso.</p>
+    <div class="persona-grid">
+      <div class="persona"><div class="nm">Beatriz, 27</div><div class="role">Cética com brechó online</div><p>Já comprou peça que não bateu com a medida em outro site e ficou sem o dinheiro da troca. Só compra se vir medida real, fotos de vários ângulos e a política de troca antes de fechar.</p></div>
+      <div class="persona"><div class="nm">Camila, 22</div><div class="role">Universitária, busca específica</div><p>Procura uma peça exata pra uma ocasião. Precisa que o filtro de tamanho e preço restrinja o catálogo de verdade, não só decore a tela.</p></div>
+      <div class="persona"><div class="nm">Juliana, 34</div><div class="role">Orçamento apertado</div><p>Mãe comprando com orçamento fechado. Precisa ver o frete antes de chegar no fim do checkout, pra não ter surpresa.</p></div>
+      <div class="persona"><div class="nm">Renata, 30</div><div class="role">Quer vender o que não usa</div><p>Tem roupas boas que não usa mais, mas não sabe descrever condição e medida — tem medo de precificar errado ou a peça não vender.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="fic-tag">◆ Hipótese</span>
+    <div class="label">Jornada</div>
+    <h2>A jornada da Beatriz — o perfil mais exigente de confiança</h2>
+    <p class="lead">Mapeada pra expor onde a decisão de compra pode travar. A etapa 3 é o ponto crítico: é onde a pessoa decide se confia ou desiste.</p>
+    <div class="journey">
+      <div class="jstep"><div class="n">01</div><h4>Descoberta</h4><p>Chega pelo catálogo ou busca.</p></div>
+      <div class="jstep"><div class="n">02</div><h4>Exploração</h4><p>Usa o filtro — precisa restringir de verdade.</p></div>
+      <div class="jstep crit"><div class="n">03 · crítico</div><h4>Avaliação</h4><p>Fotos, medidas e estado. É aqui que decide confiar.</p></div>
+      <div class="jstep crit"><div class="n">04 · crítico</div><h4>Decisão de confiança</h4><p>Confere a política de troca antes de seguir.</p></div>
+      <div class="jstep"><div class="n">05</div><h4>Compra</h4><p>Frete já visível no carrinho, sem surpresa.</p></div>
+      <div class="jstep"><div class="n">06</div><h4>Pós-compra</h4><p>Acompanha o pedido, troca fácil se precisar.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="label">Arquitetura da informação</div>
+    <h2>7 seções, construídas em cima dos achados da pesquisa</h2>
+    <ul class="ia-list">
+      <li><b>01 Home</b> — vitrines, busca, categorias</li>
+      <li><b>02 Catálogo</b> — filtro real: tamanho, preço, cor, estado, marca</li>
+      <li><b>03 Produto</b> — fotos múltiplas, medidas reais, política de troca visível</li>
+      <li><b>04 Carrinho</b> — frete calculado aqui, não só no checkout</li>
+      <li><b>05 Checkout</b> — endereço, pagamento, confirmação</li>
+      <li><b>06 Minha conta</b> — pedidos, favoritos, "Vender minhas roupas"</li>
+      <li><b>07 Institucional</b> — como funciona, política de troca, FAQ</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="label">Wireframes</div>
+    <h2>De baixa pra média fidelidade</h2>
+    <div class="thumbs">
+      <a class="thumb" href="https://claude.ai/artifact/Ddehf3vNwEgJvxRDtzG4qm" target="_blank">
+        <div class="k">Baixa fidelidade</div>
+        <h3>9 telas, estrutura em cinza</h3>
+        <span>Ver wireframes →</span>
+      </a>
+      <a class="thumb" href="https://claude.ai/artifact/RZnhAY1Y1njj7qZPaKzo5b" target="_blank">
+        <div class="k">Média fidelidade</div>
+        <h3>+ 5 estados de erro e vazio</h3>
+        <span>Ver wireframes →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="real-tag">● Identidade real</span>
+    <div class="label">UI · Identidade visual</div>
+    <h2>Paleta, tipografia e marca</h2>
+    <p class="lead">Paleta e checklist de contraste desenhados e calculados com a fórmula real do WCAG 2.2 — verde-floresta no lugar do clichê "eco verde-claro", terracota como cor de ação. A marca (monograma + laço de circularidade) também é autoral.</p>
+    <div class="swatches">
+      <div class="sw"><div class="c" style="background:#24543F"></div><span>Primária<br>#24543F</span></div>
+      <div class="sw"><div class="c" style="background:#A94F36"></div><span>Secundária<br>#A94F36</span></div>
+      <div class="sw"><div class="c" style="background:#DCE8DD"></div><span>Terciária<br>#DCE8DD</span></div>
+      <div class="sw"><div class="c" style="background:#F7F4EF;border:1px solid var(--line)"></div><span>Neutra<br>#F7F4EF</span></div>
+      <div class="sw"><div class="c" style="background:#242321"></div><span>Texto<br>#242321</span></div>
+      <div class="sw"><div class="c" style="background:#B42318"></div><span>Alerta<br>#B42318</span></div>
+    </div>
+    <div class="type-sample">
+      <div><div class="tag2">Títulos — Manrope</div><div style="font-family:'Manrope',sans-serif;font-weight:700;font-size:22px;margin-top:8px">Roupas boas, por preço justo</div></div>
+      <div><div class="tag2">Corpo/UI — DM Sans</div><div style="font-size:14.5px;margin-top:8px">Tamanho M · Estado: bom · Busto 108cm, Comprimento 62cm.</div></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="label">Protótipo</div>
+    <h2>Clicável, com login e fluxo de venda completos</h2>
+    <p class="lead">Catálogo com filtro funcional, carrinho com frete visível, política de troca expansível na página do produto, acesso à conta com login/criar conta, e cadastro de peça pra vender.</p>
+    <div class="cta">
+      <a class="btn" href="index.html">Abrir o site →</a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="label">Testes</div>
+    <h2>Simulado vs. real</h2>
+
+    <span class="fic-tag">◆ Simulado</span>
+    <p class="lead" style="margin-top:0">Testes de usabilidade simulados com as 4 personas, rodados sobre o protótipo de verdade (não é relato inventado — cada passo foi executado e verificado no protótipo publicado).</p>
+    <ul class="findings">
+      <li><b>Beatriz</b> — abre o produto, vê medidas e estado, confere a política de troca antes de decidir. Sem atrito.</li>
+      <li><b>Camila</b> — filtra por tamanho e condição; o catálogo restringe de verdade. Sem atrito.</li>
+      <li><b>Juliana</b> — adiciona ao carrinho; o frete já aparece ali, antes do checkout. Sem atrito.</li>
+      <li><b>Renata</b> — tenta vender sem estar logada, cai no login e volta pro cadastro de peça; validação de fotos/medida funciona. Sem atrito.</li>
+    </ul>
+
+    <span class="real-tag" style="margin-top:28px">● Real</span>
+    <p class="lead" style="margin-top:0">Auditoria técnica real no protótipo publicado: contraste de cor calculado pela fórmula do WCAG em todo texto/ícone renderizado, tamanho de toque, navegação por teclado, zoom de texto a 200% e responsividade mobile.</p>
+
+    <div class="bugbox">
+      <b>Bug 1 — política de troca não abria</b>
+      <p>O link "ver política de troca" dependia de um alert() do navegador, que não funciona em páginas publicadas como esta. Trocado por um texto que expande na própria tela.</p>
+    </div>
+    <div class="bugbox">
+      <b>Bug 2 — overflow horizontal no checkout mobile</b>
+      <p>Uma regra de CSS zerava sem querer o respiro lateral do cabeçalho; só ficava visível com item no carrinho, quando a badge vazava a tela. Corrigido.</p>
+    </div>
+    <div class="okbox">
+      <b>Sem problema</b>
+      <p>Contraste de texto (exceto 1 token de ícone decorativo, já corrigido), tamanho de toque, foco de teclado visível e zoom de texto a 200% — todos dentro do padrão AA.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="label">Conclusão</div>
+    <h2>O que o ReVeste me ensinou</h2>
+    <p class="lead">Confiança é o produto. Cada decisão de design — medida real, foto de todo ângulo, política de troca visível antes do checkout, frete transparente — existe pra responder a uma dúvida real de quem nunca comprou roupa usada online. A pesquisa com marketplaces reais (e os próprios bugs que a auditoria encontrou) mostrou que até interfaces publicadas erram nisso — e que testar de verdade, não só desenhar, é o que pega esses erros antes do usuário.</p>
+    <p>Próximo projeto da linha de e-commerce: Papel & Afeto, papelaria criativa com personalização de produto.</p>
+  </div>
+</section>
+
+<footer>
+  ReVeste — projeto de portfólio de UX/UI Design, Yara Fabrícia.
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,590 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ReVeste — loja de moda circular</title>
+<meta name="description" content="ReVeste — compre e venda roupas de segunda mão com medida real, fotos de todo ângulo e política de troca visível.">
+<link rel="icon" href="assets/reveste-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F7F4EF; --panel:#ffffff; --surface:#DCE8DD; --line:#E4DFD2; --line-strong:#242321;
+  --text:#242321; --muted:#5B564C; --faint:#716B5C;
+  --primary:#24543F; --secondary:#A94F36;
+  --accent:#24543F; --accent-ink:#ffffff;
+  --danger:#B42318; --good:#24543F;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,-apple-system,sans-serif;font-size:14px;
+  padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px));}
+h1,h2,h3,.brand{font-family:'Manrope',system-ui,sans-serif;font-weight:700;}
+a{color:inherit;text-decoration:none}
+[hidden]{display:none!important}
+.wrap{max-width:1040px;margin:0 auto;padding:0 max(20px,env(safe-area-inset-left,0px)) 0 max(20px,env(safe-area-inset-right,0px));}
+header{border-bottom:1px solid var(--line);position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);z-index:5;}
+.nav{display:flex;align-items:center;justify-content:space-between;padding-top:16px;padding-bottom:16px;gap:14px;}
+.brand{font-weight:800;font-size:17px;letter-spacing:-.01em;cursor:pointer;color:var(--primary);}
+.nav-links{display:flex;gap:18px;font-size:13px;color:var(--muted);}
+.nav-links a:hover{color:var(--text)}
+.nav-icons{display:flex;gap:14px;align-items:center;font-size:13px;}
+.icon-btn{position:relative;cursor:pointer;border:1px solid var(--line);border-radius:999px;padding:7px 10px;}
+.badge{position:absolute;top:-6px;right:-6px;background:var(--line-strong);color:var(--bg);font-size:9.5px;font-weight:700;border-radius:999px;min-width:16px;height:16px;display:flex;align-items:center;justify-content:center;padding:0 3px;}
+main{padding-bottom:80px;}
+.view{padding-top:28px;}
+
+/* home */
+.hero{background:var(--surface);border-radius:14px;padding:40px 28px;margin:24px 0;display:flex;flex-wrap:wrap;gap:24px;align-items:center;justify-content:space-between;}
+.hero h1{font-size:26px;margin:0 0 8px;max-width:420px;line-height:1.2;}
+.hero p{color:var(--muted);margin:0 0 16px;max-width:380px;font-size:13.5px;line-height:1.55;}
+.btn{display:inline-flex;align-items:center;gap:6px;border:1.4px solid var(--line-strong);border-radius:999px;padding:10px 18px;font-size:13px;font-weight:700;cursor:pointer;background:transparent;color:var(--text);font-family:inherit;}
+.btn.solid{background:var(--accent);color:var(--accent-ink);}
+.btn.sm{padding:7px 13px;font-size:12px;}
+.row{display:flex;gap:10px;flex-wrap:wrap;}
+.section-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:32px 0 14px;}
+
+/* catalog */
+.catalog-layout{display:grid;grid-template-columns:200px 1fr;gap:28px;align-items:start;}
+.filters{display:flex;flex-direction:column;gap:18px;position:sticky;top:76px;}
+.filter-group label{display:block;font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin-bottom:8px;}
+.filter-opt{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--text);padding:3px 0;cursor:pointer;}
+.filter-opt input{accent-color:var(--primary);}
+input[type="range"],input[type="radio"],input[type="checkbox"]{accent-color:var(--primary);}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+.card{border:1px solid var(--line);border-radius:10px;overflow:hidden;cursor:pointer;background:var(--panel);}
+.card:hover{border-color:var(--line-strong);}
+.card-img{aspect-ratio:1;background:var(--surface);display:flex;align-items:center;justify-content:center;font-size:28px;color:var(--faint);position:relative;}
+.fav-dot{position:absolute;top:8px;right:8px;width:26px;height:26px;border-radius:999px;background:var(--bg);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:13px;}
+.fav-dot.active{color:var(--secondary);}
+.card-body{padding:10px 12px 14px;}
+.card-body .nm{font-size:13px;font-weight:600;margin-bottom:2px;}
+.card-body .meta{font-size:11.5px;color:var(--muted);margin-bottom:4px;}
+.card-body .price{font-size:13.5px;font-weight:700;}
+.empty{padding:60px 20px;text-align:center;color:var(--muted);}
+.empty .ic{font-size:30px;margin-bottom:10px;}
+
+/* product */
+.product-layout{display:grid;grid-template-columns:1fr 1fr;gap:36px;}
+.gallery-main{aspect-ratio:1;background:var(--surface);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:44px;color:var(--faint);}
+.gallery-thumbs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px;}
+.gallery-thumbs div{aspect-ratio:1;background:var(--surface);border-radius:6px;display:flex;align-items:center;justify-content:center;color:var(--faint);font-size:18px;}
+.chip{display:inline-flex;border:none;background:var(--surface);border-radius:999px;padding:5px 11px;font-size:11.5px;font-weight:600;color:var(--text);}
+.measures{display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12.5px;color:var(--muted);background:var(--surface);border-radius:8px;padding:12px 14px;}
+.trust-link{font-size:12.5px;font-weight:600;color:var(--primary);text-decoration:underline;cursor:pointer;}
+.similar{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+
+/* cart/checkout */
+.cart-layout{display:grid;grid-template-columns:1.4fr 1fr;gap:28px;align-items:start;}
+.cart-item{display:flex;gap:12px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line);}
+.cart-item .ph{width:60px;height:60px;border-radius:8px;background:var(--surface);display:flex;align-items:center;justify-content:center;color:var(--faint);flex:none;}
+.summary{border:1px solid var(--line);border-radius:12px;padding:18px;position:sticky;top:76px;}
+.summary .ln{display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px;color:var(--muted);}
+.summary .ln.total{color:var(--text);font-weight:700;font-size:15px;border-top:1px solid var(--line);padding-top:10px;margin-top:4px;}
+.field{width:100%;border:1.3px solid var(--line);border-radius:7px;padding:9px 11px;font-size:13px;font-family:inherit;color:var(--text);background:var(--panel);}
+.field.err{border-color:var(--danger);}
+.field-label{font-size:11.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;margin:10px 0 6px;display:block;}
+.errtext{font-size:11.5px;color:var(--danger);margin-top:4px;}
+.pay-opt{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:12.5px;margin-bottom:8px;cursor:pointer;}
+.pay-opt.sel{border-color:var(--line-strong);}
+
+/* account/orders/sell */
+.order-row{display:flex;justify-content:space-between;align-items:center;border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-bottom:10px;}
+.status-tag{font-size:11.5px;font-weight:700;padding:4px 10px;border-radius:999px;background:var(--surface);}
+.form-layout{display:grid;grid-template-columns:1fr 1.2fr;gap:28px;}
+.upload-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.upload-box{aspect-ratio:1;border:1.5px dashed var(--line);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--faint);font-size:18px;cursor:pointer;}
+.note{font-size:11.5px;color:var(--muted);margin-top:6px;line-height:1.5;}
+.center{display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;padding:50px 20px;}
+.ic64{font-size:48px;}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--line-strong);color:var(--bg);padding:11px 20px;border-radius:999px;font-size:12.5px;font-weight:600;z-index:20;opacity:0;pointer-events:none;transition:opacity .2s;}
+.toast.show{opacity:1;}
+
+@media (max-width: 760px){
+  .catalog-layout{grid-template-columns:1fr;}
+  .filters{position:static;flex-direction:row;flex-wrap:wrap;}
+  .grid{grid-template-columns:repeat(2,1fr);}
+  .product-layout,.cart-layout,.form-layout{grid-template-columns:1fr;}
+  .similar{grid-template-columns:repeat(2,1fr);}
+  .nav-links{display:none;}
+}
+</style>
+
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <div class="brand" onclick="nav('home')">ReVeste</div>
+    <div class="nav-links">
+      <a onclick="nav('catalogo')">Catálogo</a>
+      <a onclick="gatedNav('vender')">Vender</a>
+      <a onclick="gatedNav('conta')">Meus pedidos</a>
+      <a href="case.html">Case study</a>
+    </div>
+    <div class="nav-icons">
+      <div class="icon-btn" id="authBtn" onclick="handleAuthClick()">Entrar</div>
+      <div class="icon-btn" onclick="nav('favoritos')">♥ <span class="badge" id="favBadge" hidden>0</span></div>
+      <div class="icon-btn" onclick="nav('carrinho')">Carrinho <span class="badge" id="cartBadge" hidden>0</span></div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section id="view-home" class="view">
+    <div class="hero">
+      <div>
+        <h1>Roupas boas, por preço justo — sem letra miúda.</h1>
+        <p>Catálogo com medida real, foto de todo ângulo e política de troca visível antes de você decidir. Compre ou venda peças que já tiveram dono.</p>
+        <div class="row">
+          <button class="btn solid" onclick="nav('catalogo')">Explorar catálogo</button>
+          <button class="btn" onclick="gatedNav('vender')">Vender minhas roupas</button>
+        </div>
+      </div>
+      <img src="assets/reveste-logo.png" alt="Logo do ReVeste" style="width:150px;height:150px;flex:none">
+    </div>
+    <div class="section-label">Categorias</div>
+    <div class="grid" id="homeCats"></div>
+  </section>
+
+  <section id="view-catalogo" class="view" hidden>
+    <div class="section-label" style="margin-top:0">Catálogo</div>
+    <div class="catalog-layout">
+      <div class="filters">
+        <div class="filter-group">
+          <label>Tamanho</label>
+          <label class="filter-opt"><input type="checkbox" value="P" class="f-size"> P</label>
+          <label class="filter-opt"><input type="checkbox" value="M" class="f-size"> M</label>
+          <label class="filter-opt"><input type="checkbox" value="G" class="f-size"> G</label>
+        </div>
+        <div class="filter-group">
+          <label>Estado</label>
+          <label class="filter-opt"><input type="checkbox" value="Novo" class="f-cond"> Novo</label>
+          <label class="filter-opt"><input type="checkbox" value="Bom" class="f-cond"> Bom</label>
+          <label class="filter-opt"><input type="checkbox" value="Usado" class="f-cond"> Usado</label>
+        </div>
+        <div class="filter-group">
+          <label>Preço até</label>
+          <input type="range" id="priceMax" min="30" max="200" value="200" style="width:100%" oninput="renderCatalog()">
+          <div class="note" id="priceMaxLabel">até R$ 200</div>
+        </div>
+        <button class="btn sm" onclick="clearFilters()">Limpar filtros</button>
+      </div>
+      <div>
+        <div class="grid" id="catalogGrid"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="view-produto" class="view" hidden>
+    <a class="note" style="cursor:pointer" onclick="nav('catalogo')">&larr; Voltar ao catálogo</a>
+    <div class="product-layout" style="margin-top:16px" id="productDetail"></div>
+    <div class="section-label">Peças parecidas</div>
+    <div class="similar" id="similarGrid"></div>
+  </section>
+
+  <section id="view-carrinho" class="view" hidden>
+    <div class="section-label" style="margin-top:0">Seu carrinho</div>
+    <div id="cartContent"></div>
+  </section>
+
+  <section id="view-checkout" class="view" hidden>
+    <div class="section-label" style="margin-top:0">Checkout</div>
+    <div class="cart-layout">
+      <div>
+        <span class="field-label" style="margin-top:0">Endereço de entrega</span>
+        <input class="field" placeholder="CEP">
+        <div class="row" style="margin-top:8px">
+          <input class="field" placeholder="Rua" style="flex:2">
+          <input class="field" placeholder="Número" style="flex:1">
+        </div>
+        <span class="field-label">Forma de pagamento</span>
+        <div class="pay-opt sel"><input type="radio" name="pay" checked> Pix (aprovação imediata)</div>
+        <div class="pay-opt"><input type="radio" name="pay"> Cartão de crédito</div>
+        <div class="pay-opt"><input type="radio" name="pay"> Boleto</div>
+      </div>
+      <div class="summary">
+        <div class="ln"><span>Subtotal</span><span id="coSubtotal">R$ 0,00</span></div>
+        <div class="ln"><span>Frete</span><span id="coFrete">R$ 0,00</span></div>
+        <div class="ln total"><span>Total</span><span id="coTotal">R$ 0,00</span></div>
+        <button class="btn solid" style="width:100%;justify-content:center;margin-top:10px" onclick="confirmOrder()">Confirmar e pagar</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="view-confirmacao" class="view" hidden>
+    <div class="center">
+      <div class="ic64">✓</div>
+      <h2 style="margin:0">Pedido confirmado</h2>
+      <p class="note">Pedido #<span id="orderNum"></span> — você vai receber atualizações por e-mail.</p>
+      <button class="btn solid" onclick="gatedNav('conta')">Acompanhar pedido</button>
+    </div>
+  </section>
+
+  <section id="view-favoritos" class="view" hidden>
+    <div class="section-label" style="margin-top:0">Favoritos</div>
+    <div class="grid" id="favGrid"></div>
+  </section>
+
+  <section id="view-login" class="view" hidden>
+    <div style="max-width:380px;margin:20px auto 0">
+      <h2 id="authTitle" style="margin:0 0 4px">Entrar</h2>
+      <p class="note" id="authSub" style="margin:0 0 18px">Acesse pra ver seus pedidos, favoritos e peças à venda.</p>
+      <span class="field-label" style="margin-top:0">E-mail</span>
+      <input class="field" id="authEmail" placeholder="voce@email.com">
+      <span class="field-label">Senha</span>
+      <input class="field" type="password" id="authPass" placeholder="••••••••">
+      <div class="errtext" id="authErr" hidden>Preencha e-mail e senha pra continuar</div>
+      <button class="btn solid" style="width:100%;justify-content:center;margin-top:14px" id="authSubmit" onclick="doAuth()">Entrar</button>
+      <p class="note" style="margin-top:14px;text-align:center">
+        <span id="authToggleText">Ainda não tem conta?</span>
+        <span class="trust-link" onclick="toggleAuthMode()" id="authToggleLink">Criar conta</span>
+      </p>
+    </div>
+  </section>
+
+  <section id="view-conta" class="view" hidden>
+    <div class="section-label" style="margin-top:0">Meus pedidos</div>
+    <div class="order-row"><div><b>Pedido #8821</b><div class="note">2 peças · R$ 139,80</div></div><span class="status-tag">A caminho</span></div>
+    <div class="order-row"><div><b>Pedido #8790</b><div class="note">1 peça · R$ 49,90</div></div><span class="status-tag">Entregue</span></div>
+    <div class="order-row" id="newOrderRow" hidden><div><b>Pedido #<span id="newOrderNum2"></span></b><div class="note">Confirmado agora</div></div><span class="status-tag">Confirmado</span></div>
+  </section>
+
+  <section id="view-vender" class="view" hidden>
+    <div class="section-label" style="margin-top:0">Vender minhas roupas</div>
+    <div class="form-layout">
+      <div>
+        <span class="field-label" style="margin-top:0">Fotos da peça</span>
+        <div class="upload-grid">
+          <div class="upload-box" id="up1" onclick="fillUpload(this)">+</div>
+          <div class="upload-box" id="up2" onclick="fillUpload(this)">+</div>
+          <div class="upload-box" id="up3" onclick="fillUpload(this)">+</div>
+        </div>
+        <p class="note">Adicione pelo menos 3 fotos: frente, costas e etiqueta, com boa luz natural.</p>
+      </div>
+      <div>
+        <span class="field-label" style="margin-top:0">Categoria</span>
+        <select class="field"><option>Blusas e camisetas</option><option>Jaquetas</option><option>Calças</option><option>Vestidos</option><option>Calçados</option><option>Bolsas</option></select>
+        <div class="row" style="margin-top:8px">
+          <div style="flex:1"><span class="field-label" style="margin-top:0">Tamanho</span><select class="field"><option>P</option><option>M</option><option>G</option></select></div>
+          <div style="flex:1"><span class="field-label" style="margin-top:0">Estado</span><select class="field"><option>Novo</option><option>Bom</option><option>Usado</option></select></div>
+        </div>
+        <span class="field-label">Medidas (busto, em cm)</span>
+        <input class="field" id="measureField" placeholder="Ex: 100">
+        <div class="errtext" id="measureErr" hidden>Preencha a medida do busto pra publicar a peça</div>
+        <span class="field-label">Preço</span>
+        <input class="field" id="priceField" placeholder="R$">
+        <p class="note">Sugestão: peças parecidas no ReVeste vendem entre R$ 50 e R$ 90.</p>
+        <button class="btn solid" style="margin-top:10px" onclick="submitSell()">Publicar peça</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const PRODUCTS = [
+  {id:'p1', name:'Jaqueta jeans oversized', cat:'Jaquetas', size:'M', cond:'Bom', price:79.90, seller:'Camila R.', icon:'🧥', measures:{Busto:'108cm',Comprimento:'62cm',Ombro:'46cm'}},
+  {id:'p2', name:'Vestido midi floral', cat:'Vestidos', size:'P', cond:'Novo', price:59.90, seller:'Renata A.', icon:'👗', measures:{Busto:'90cm',Comprimento:'105cm'}},
+  {id:'p3', name:'Calça alfaiataria', cat:'Calças', size:'G', cond:'Bom', price:69.90, seller:'Juliana F.', icon:'👖', measures:{Cintura:'82cm',Comprimento:'100cm'}},
+  {id:'p4', name:'Blusa de tricot', cat:'Blusas', size:'M', cond:'Usado', price:39.90, seller:'Beatriz M.', icon:'👚', measures:{Busto:'96cm',Comprimento:'58cm'}},
+  {id:'p5', name:'Bota coturno', cat:'Calçados', size:'38', cond:'Bom', price:89.90, seller:'Camila R.', icon:'👢', measures:{Numeração:'38'}},
+  {id:'p6', name:'Bolsa transversal', cat:'Bolsas', size:'Único', cond:'Novo', price:49.90, seller:'Renata A.', icon:'👜', measures:{Largura:'22cm',Altura:'16cm'}},
+  {id:'p7', name:'Camisa social listrada', cat:'Blusas', size:'M', cond:'Bom', price:44.90, seller:'Juliana F.', icon:'👔', measures:{Busto:'102cm',Comprimento:'70cm'}},
+  {id:'p8', name:'Saia plissada', cat:'Vestidos', size:'P', cond:'Novo', price:54.90, seller:'Beatriz M.', icon:'🩱', measures:{Cintura:'70cm',Comprimento:'60cm'}},
+];
+
+let cart = [];
+let favs = new Set();
+let orderCounter = 9001;
+let loggedIn = false;
+let authMode = 'login';
+let afterAuthView = 'conta';
+
+function money(v){ return 'R$ ' + v.toFixed(2).replace('.',','); }
+
+function nav(view, param){
+  document.querySelectorAll('.view').forEach(v => v.hidden = true);
+  document.getElementById('view-' + view).hidden = false;
+  window.scrollTo({top:0, behavior:'instant'});
+  if(view === 'produto') renderProduct(param);
+  if(view === 'catalogo') renderCatalog();
+  if(view === 'carrinho') renderCart();
+  if(view === 'checkout') renderCheckout();
+  if(view === 'favoritos') renderFavs();
+  if(view === 'home') renderHome();
+  try{ localStorage.setItem('reveste_last_view', view); }catch(e){}
+}
+
+function handleAuthClick(){
+  if(loggedIn){ nav('conta'); return; }
+  afterAuthView = 'conta';
+  authMode = 'login';
+  updateAuthView();
+  nav('login');
+}
+
+function gatedNav(view){
+  if(!loggedIn){
+    afterAuthView = view;
+    authMode = 'login';
+    updateAuthView();
+    nav('login');
+    return;
+  }
+  nav(view);
+}
+
+function toggleAuthMode(){
+  authMode = authMode === 'login' ? 'signup' : 'login';
+  updateAuthView();
+}
+
+function updateAuthView(){
+  const isLogin = authMode === 'login';
+  document.getElementById('authTitle').textContent = isLogin ? 'Entrar' : 'Criar conta';
+  document.getElementById('authSub').textContent = isLogin ? 'Acesse pra ver seus pedidos, favoritos e peças à venda.' : 'Leva menos de um minuto.';
+  document.getElementById('authSubmit').textContent = isLogin ? 'Entrar' : 'Criar conta';
+  document.getElementById('authToggleText').textContent = isLogin ? 'Ainda não tem conta?' : 'Já tem conta?';
+  document.getElementById('authToggleLink').textContent = isLogin ? 'Criar conta' : 'Entrar';
+  document.getElementById('authErr').hidden = true;
+}
+
+function doAuth(){
+  const email = document.getElementById('authEmail').value.trim();
+  const pass = document.getElementById('authPass').value.trim();
+  if(!email || !pass){
+    document.getElementById('authErr').hidden = false;
+    return;
+  }
+  loggedIn = true;
+  document.getElementById('authBtn').textContent = 'Minha conta';
+  toast(authMode === 'login' ? 'Login feito' : 'Conta criada');
+  nav(afterAuthView);
+}
+
+function toast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 1600);
+}
+
+function productCard(p){
+  const isFav = favs.has(p.id);
+  const div = document.createElement('div');
+  div.className = 'card';
+  div.innerHTML = `
+    <div class="card-img" onclick="nav('produto','${p.id}')">${p.icon}
+      <div class="fav-dot ${isFav?'active':''}" onclick="event.stopPropagation(); toggleFav('${p.id}')">${isFav?'♥':'♡'}</div>
+    </div>
+    <div class="card-body" onclick="nav('produto','${p.id}')">
+      <div class="nm">${p.name}</div>
+      <div class="meta">Tamanho ${p.size} · ${p.cond}</div>
+      <div class="price">${money(p.price)}</div>
+    </div>`;
+  return div;
+}
+
+function renderHome(){
+  const el = document.getElementById('homeCats');
+  el.innerHTML = '';
+  PRODUCTS.slice(0,6).forEach(p => el.appendChild(productCard(p)));
+}
+
+function clearFilters(){
+  document.querySelectorAll('.f-size,.f-cond').forEach(c=>c.checked=false);
+  document.getElementById('priceMax').value = 200;
+  renderCatalog();
+}
+
+function renderCatalog(){
+  const sizes = [...document.querySelectorAll('.f-size:checked')].map(c=>c.value);
+  const conds = [...document.querySelectorAll('.f-cond:checked')].map(c=>c.value);
+  const maxPrice = Number(document.getElementById('priceMax').value);
+  document.getElementById('priceMaxLabel').textContent = 'até ' + money(maxPrice);
+  const filtered = PRODUCTS.filter(p =>
+    (sizes.length === 0 || sizes.includes(p.size)) &&
+    (conds.length === 0 || conds.includes(p.cond)) &&
+    p.price <= maxPrice
+  );
+  const el = document.getElementById('catalogGrid');
+  el.innerHTML = '';
+  if(filtered.length === 0){
+    el.innerHTML = `<div class="empty" style="grid-column:1/-1">
+      <div class="ic">🔍</div>
+      <h3 style="margin:0 0 6px">Nenhuma peça com esses filtros</h3>
+      <p class="note">Tente remover um filtro ou aumentar o preço máximo.</p>
+    </div>`;
+    return;
+  }
+  filtered.forEach(p => el.appendChild(productCard(p)));
+}
+
+function toggleTrocaInfo(){
+  const el = document.getElementById('trocaInfo');
+  if(el) el.hidden = !el.hidden;
+}
+
+function toggleFav(id){
+  if(favs.has(id)) favs.delete(id); else favs.add(id);
+  updateBadges();
+  renderCatalog();
+  if(!document.getElementById('view-produto').hidden) renderProduct(id);
+  if(!document.getElementById('view-favoritos').hidden) renderFavs();
+}
+
+function renderFavs(){
+  const el = document.getElementById('favGrid');
+  el.innerHTML = '';
+  const list = PRODUCTS.filter(p => favs.has(p.id));
+  if(list.length === 0){
+    el.innerHTML = `<div class="empty" style="grid-column:1/-1">
+      <div class="ic">♡</div>
+      <h3 style="margin:0 0 6px">Você ainda não favoritou nada</h3>
+      <p class="note">Toque no coração de uma peça pra guardar aqui.</p>
+    </div>`;
+    return;
+  }
+  list.forEach(p => el.appendChild(productCard(p)));
+}
+
+function renderProduct(id){
+  const p = PRODUCTS.find(x => x.id === id) || PRODUCTS[0];
+  const isFav = favs.has(p.id);
+  const measuresHtml = Object.entries(p.measures).map(([k,v])=>`<div><b>${k}:</b> ${v}</div>`).join('');
+  document.getElementById('productDetail').innerHTML = `
+    <div>
+      <div class="gallery-main">${p.icon}</div>
+      <div class="gallery-thumbs"><div>${p.icon}</div><div>${p.icon}</div><div>${p.icon}</div></div>
+    </div>
+    <div>
+      <h2 style="margin:0 0 4px">${p.name}</h2>
+      <p class="note" style="margin:0 0 10px">Tamanho ${p.size} · ${p.cat}</p>
+      <div class="row" style="margin-bottom:14px">
+        <span class="chip">Estado: ${p.cond}</span>
+        <span class="chip">Vendido por ${p.seller}</span>
+      </div>
+      <div class="measures">${measuresHtml}</div>
+      <div class="row" style="justify-content:space-between;align-items:center;margin:16px 0">
+        <h2 style="margin:0">${money(p.price)}</h2>
+        <span class="trust-link" onclick="toggleTrocaInfo()">Ver política de troca →</span>
+      </div>
+      <div class="note" id="trocaInfo" hidden style="background:var(--surface);border-radius:8px;padding:10px 12px;margin:-4px 0 16px;color:var(--text)">Até 30 dias após o recebimento, peça sem uso e com etiqueta. Reembolso no mesmo método de pagamento.</div>
+      <div class="row">
+        <button class="btn solid" onclick="addToCart('${p.id}')">Adicionar ao carrinho</button>
+        <button class="btn" onclick="toggleFav('${p.id}')">${isFav?'♥ Favoritado':'♡ Favoritar'}</button>
+      </div>
+    </div>`;
+  const simEl = document.getElementById('similarGrid');
+  simEl.innerHTML = '';
+  PRODUCTS.filter(x=>x.cat===p.cat && x.id!==p.id).slice(0,4).forEach(sp => simEl.appendChild(productCard(sp)));
+}
+
+function addToCart(id){
+  cart.push(id);
+  updateBadges();
+  toast('Peça adicionada ao carrinho');
+}
+
+function updateBadges(){
+  const cb = document.getElementById('cartBadge');
+  cb.textContent = cart.length; cb.hidden = cart.length === 0;
+  const fb = document.getElementById('favBadge');
+  fb.textContent = favs.size; fb.hidden = favs.size === 0;
+}
+
+function frete(subtotal){
+  if(subtotal === 0) return 0;
+  return subtotal > 150 ? 0 : 18.90;
+}
+
+function renderCart(){
+  const el = document.getElementById('cartContent');
+  if(cart.length === 0){
+    el.innerHTML = `<div class="empty">
+      <div class="ic">🛒</div>
+      <h3 style="margin:0 0 6px">Seu carrinho está vazio</h3>
+      <p class="note">As peças que você adicionar aparecem aqui.</p>
+      <button class="btn solid" style="margin-top:12px" onclick="nav('catalogo')">Explorar catálogo</button>
+    </div>`;
+    return;
+  }
+  const items = cart.map(id => PRODUCTS.find(p=>p.id===id));
+  const subtotal = items.reduce((s,p)=>s+p.price,0);
+  const f = frete(subtotal);
+  const itemsHtml = items.map((p,i) => `
+    <div class="cart-item">
+      <div class="ph">${p.icon}</div>
+      <div style="flex:1"><b>${p.name}</b><div class="note">Tamanho ${p.size}</div></div>
+      <div><b>${money(p.price)}</b></div>
+      <span class="note" style="cursor:pointer;text-decoration:underline" onclick="removeFromCart(${i})">remover</span>
+    </div>`).join('');
+  el.innerHTML = `
+    <div class="cart-layout">
+      <div>${itemsHtml}</div>
+      <div class="summary">
+        <div class="ln"><span>Subtotal</span><span>${money(subtotal)}</span></div>
+        <div class="ln"><span>Frete</span><span>${f===0?'Grátis':money(f)}</span></div>
+        <div class="ln total"><span>Total</span><span>${money(subtotal+f)}</span></div>
+        <button class="btn solid" style="width:100%;justify-content:center;margin-top:10px" onclick="nav('checkout')">Fechar pedido</button>
+      </div>
+    </div>`;
+}
+
+function renderCheckout(){
+  const items = cart.map(id => PRODUCTS.find(p=>p.id===id));
+  const subtotal = items.reduce((s,p)=>s+p.price,0);
+  const f = frete(subtotal);
+  document.getElementById('coSubtotal').textContent = money(subtotal);
+  document.getElementById('coFrete').textContent = f===0?'Grátis':money(f);
+  document.getElementById('coTotal').textContent = money(subtotal+f);
+}
+
+function confirmOrder(){
+  orderCounter++;
+  document.getElementById('orderNum').textContent = orderCounter;
+  document.getElementById('newOrderNum2').textContent = orderCounter;
+  document.getElementById('newOrderRow').hidden = false;
+  cart = [];
+  updateBadges();
+  nav('confirmacao');
+}
+
+function removeFromCart(i){
+  cart.splice(i,1);
+  updateBadges();
+  renderCart();
+}
+
+function fillUpload(el){
+  el.textContent = '✓';
+  el.style.borderStyle = 'solid';
+}
+
+function submitSell(){
+  const measure = document.getElementById('measureField').value.trim();
+  const err = document.getElementById('measureErr');
+  const uploaded = ['up1','up2','up3'].filter(id => document.getElementById(id).textContent === '✓').length;
+  if(!measure || uploaded < 3){
+    err.hidden = false;
+    err.textContent = !measure ? 'Preencha a medida do busto pra publicar a peça' : 'Adicione pelo menos 3 fotos (frente, costas, etiqueta)';
+    return;
+  }
+  err.hidden = true;
+  toast('Peça publicada! Ela já aparece no catálogo.');
+}
+
+document.querySelectorAll('.f-size,.f-cond').forEach(c => c.addEventListener('change', renderCatalog));
+
+renderHome();
+updateBadges();
+</script>
+
+</body>
+</html>
